@@ -16,6 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
+order-desk-server = "order_desk.server:main"
 order-desk = "order_desk:main"
 
 [build-system]
