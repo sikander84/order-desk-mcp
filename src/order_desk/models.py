@@ -42,3 +42,14 @@ class OrderSummary(BaseModel):
 class ReturnDecision(BaseModel):
     eligible: bool
     reason: str
+
+class ReturnIn(BaseModel):
+    order_id: str
+    sku: str
+    reason: str
+
+class TicketIn(BaseModel):
+    order_id: str | None = None
+    email: str
+    subject: str
+    description: str
