@@ -28,7 +28,9 @@ def test_find_orders_unknown_email_is_empty_list():
 
 
 def test_create_return():
-    resp = api.post("/returns", json={"order_id": "1001", "sku": "TEE-BLK-M", "reason": "too small"})
+    resp = api.post(
+        "/returns", json={"order_id": "1001", "sku": "TEE-BLK-M", "reason": "too small"}
+    )
     assert resp.status_code == 201
     assert resp.json()["return_id"].startswith("RMA-")
     assert resp.json()["sku"] == "TEE-BLK-M"
@@ -40,14 +42,29 @@ def test_create_return_missing_field_is_422():
 
 
 def test_create_ticket_without_order():
-    resp = api.post("/tickets", json={"email": "maya@example.com", "subject": "Sizing", "description": "Do tees run small?"})
+    resp = api.post(
+        "/tickets",
+        json={
+            "email": "maya@example.com",
+            "subject": "Sizing",
+            "description": "Do tees run small?",
+        },
+    )
     assert resp.status_code == 201
     assert resp.json()["ticket_id"].startswith("TCK-")
     assert resp.json()["status"] == "open"
 
 
 def test_create_ticket_unknown_order_is_404():
-    resp = api.post("/tickets", json={"email": "a@b.com", "subject": "x", "description": "y", "order_id": "9999"})
+    resp = api.post(
+        "/tickets",
+        json={
+            "email": "a@b.com",
+            "subject": "x",
+            "description": "y",
+            "order_id": "9999",
+        },
+    )
     assert resp.status_code == 404
 
 
