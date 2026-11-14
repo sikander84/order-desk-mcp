@@ -22,9 +22,7 @@ def to_order_summary(orderData: Order) -> OrderSummary:
         ItemSummary(
             sku=i.sku,
             quantity=i.quantity,
-            name=i.title
-            if not i.variant_title
-            else f"{i.title} ({i.variant_title})",
+            name=i.title if not i.variant_title else f"{i.title} ({i.variant_title})",
         )
         for i in orderData.line_items
     ]
@@ -33,11 +31,7 @@ def to_order_summary(orderData: Order) -> OrderSummary:
         f = orderData.fulfillments[-1]
         carrier = f.tracking_company
         tracking_url = f.tracking_url
-        delivered_on = (
-            f.delivered_at.date()
-            if f.delivered_at
-            else None
-        )
+        delivered_on = f.delivered_at.date() if f.delivered_at else None
         if not delivered_on:
             eta = orderData.fulfillments[-1].estimated_delivery_at
         else:
