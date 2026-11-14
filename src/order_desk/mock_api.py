@@ -59,7 +59,7 @@ def create_app(
     @app.post("/tickets", status_code=201)
     def create_ticket(body: TicketIn):
         if body.order_id is not None and body.order_id not in orders:
-                raise HTTPException(status_code=404, detail="order not found")
+            raise HTTPException(status_code=404, detail="order not found")
 
         result = body.model_dump()
         result["ticket_id"] = "TCK-" + uuid.uuid4().hex[:8].upper()
